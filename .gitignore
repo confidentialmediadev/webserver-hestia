@@ -1,0 +1,37 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# Editor/IDE settings
+.vscode/
+.idea/
+*.swp
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak
+
+# Environment files
+.env
+
+# Build artifacts
+dist/
+build/
+output/
+
+# Cache files
+.cache/
+node_modules/
+
+# Project-specific exclusions
+.bmad/
+.claude/
+.codex/
+.gemini/
+
+# Scripts (if not critical)
+scripts/
+
+# GitHub-specific files (if not needed)
+.github/
