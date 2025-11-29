@@ -1,0 +1,8 @@
+---
+- name: Install Hestia Certbot deploy hook
+  hosts: webservers
+  become: yes
+  vars:
+    ansible_become_method: sudo
+  roles:
+    - hestia-deploy-hook

@@ -30,8 +30,9 @@ node_modules/
 .codex/
 .gemini/
 
-# Scripts (if not critical)
-scripts/
+# Scripts (tracked) — keep scripts versioned but avoid secrets inside them
+# (previously ignored, now intentionally tracked)
+# scripts/
 
 # GitHub-specific files (if not needed)
 .github/

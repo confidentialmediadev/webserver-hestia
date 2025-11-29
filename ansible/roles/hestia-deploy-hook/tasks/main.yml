@@ -1,0 +1,25 @@
+---
+- name: Ensure Hestia deploy hook directory exists
+  file:
+    path: /etc/letsencrypt/renewal-hooks/deploy
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Copy hestia deploy hook into place
+  copy:
+    src: hestia-deploy-hook.sh
+    dest: /etc/letsencrypt/renewal-hooks/deploy/hestia-deploy.sh
+    owner: root
+    group: root
+    mode: '0755'
+    backup: yes
+
+- name: Ensure backup directory exists for Hestia SSL backups
+  file:
+    path: /root/hestia-ssl-backups
+    state: directory
+    owner: root
+    group: root
+    mode: '0700'
