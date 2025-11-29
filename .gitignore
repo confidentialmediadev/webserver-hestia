@@ -35,3 +35,6 @@ scripts/
 
 # GitHub-specific files (if not needed)
 .github/
+
+# Ignore personal documentation directory
+docs/.brian/
