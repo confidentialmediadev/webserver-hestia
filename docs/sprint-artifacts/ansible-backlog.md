@@ -30,6 +30,13 @@ This file captures Ansible tasks and roles to implement once we resume provision
 - [ ] CI / Linting
   - `ansible-lint`, `yamllint` in CI for playbooks
 
+- [ ] Role: `02-hestia-user-permissions`
+  - Automatically grant `cfeaiagent` access to all Hestia user accounts.
+  - Implement hook for user creation to set permissions and ACLs.
+
+- [ ] Role: `03-bash-completion`
+  - Install and configure `bash-completion` for all users.
+
 Notes:
 - Keep secrets out of repo: use Ansible Vault for credentials, private keys, and `.env` files.
 - Prioritize testing of playbooks in a disposable VM before running on production.
