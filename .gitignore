@@ -38,4 +38,4 @@ node_modules/
 .github/
 
 # Ignore personal documentation directory
-docs/.brian/
+#docs/.brian/
