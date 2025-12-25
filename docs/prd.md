@@ -1,16 +1,16 @@
 # Webserver Hestia - Simplified Product Requirements Document
 
 **Author:** Cfeaiagent (based on input from cfebrian)
-**Date:** 2025-12-18
-**Version:** 2.0 (Simplified)
+**Date:** 2025-12-24
+**Version:** 3.0 (ConfidentialHost Pivot)
 
 ---
 
 ## Executive Summary
 
-**CFE Web Host 26** is a simplified, self-managed hosting platform built on HestiaCP and Contabo VPS infrastructure. The goal is to replace a cPanel reseller account with a cost-effective, isolated environment for hosting WordPress sites. The focus is on standardization using HestiaCP's built-in features and minimal shell scripting for hardening, rather than complex custom automation.
+**ConfidentialHost** is a simplified, self-managed hosting platform built on HestiaCP and Contabo VPS infrastructure. The goal is to replace a cPanel reseller account with a cost-effective, isolated environment for hosting WordPress sites. The focus is on standardization using HestiaCP's built-in features and minimal shell scripting for hardening.
 
-**Primary Goal:** Establish a stable, secure, and performant hosting environment on `cfehost.net` with DNS redundancy and off-site backups.
+**Primary Goal:** Establish a stable, secure, and performant hosting environment on `confidentialhost.com` starting with a single-server setup and expanding to DNS redundancy later.
 
 ---
 
@@ -18,10 +18,9 @@
 
 ### In Scope
 - **Infrastructure**:
-    - **Server A (Master)**: Contabo VPS (US), HestiaCP (Web, DNS Master, Mail, DB).
-    - **Server B (Slave)**: Contabo VPS (EU), HestiaCP (DNS Slave only).
-- **Domain**: `cfehost.net` as the hosting provider domain.
-- **DNS**: Master/Slave cluster (Hestia API).
+    - **Server A (Primary)**: Contabo VPS (IP: 217.216.40.207), HestiaCP (Web, DNS, Mail, DB).
+- **Domain**: `confidentialhost.com` as the hosting provider domain.
+- **DNS**: Initial setup with `ns1.confidentialhost.com` and `ns2.confidentialhost.com` pointing to the same server (initially).
 - **Web Stack**: Apache + NGINX + PHP-FPM (Multi-PHP) + Redis + ModSecurity.
 - **Email**: Exim4 + Dovecot + SnappyMail + ManageSieve.
 - **Security**: SSH hardening (Key-based), Fail2Ban, ClamAV, AppArmor.
@@ -29,31 +28,29 @@
 - **Standardization**: Shell scripts for initial server setup and hardening.
 
 ### Out of Scope
-- Complex provisioning automation (Ansible/Terraform) for "lots of servers".
-- Custom control panels (relying on HestiaCP UI).
-- Multi-runtime support (Node.js/Python) for MVP (focus is WordPress).
+- Multi-server DNS clustering (Phase 2).
+- Complex provisioning automation (Ansible/Terraform).
+- Custom control panels.
 
 ---
 
 ## Functional Requirements
 
 ### FR1: Server Infrastructure
-- **FR1.1**: Provision Server A (Master) with full HestiaCP stack.
-- **FR1.2**: Provision Server B (Slave) with minimal HestiaCP stack (DNS only).
-- **FR1.3**: Configure hostnames (`host1.cfehost.net`, `ns2.cfehost.net`) and timezone.
+- **FR1.1**: Provision Primary Server (IP: 217.216.40.207) with full HestiaCP stack.
+- **FR1.2**: Configure hostname (`host1.confidentialhost.com`) and timezone.
 
 ### FR2: DNS Configuration
-- **FR2.1**: Configure Glue records for `ns1` and `ns2`.
-- **FR2.2**: Setup Master-Slave DNS clustering via Hestia API.
-- **FR2.3**: Ensure zone transfers work automatically from Master to Slave.
+- **FR2.1**: Configure Glue records for `ns1` and `ns2` at the registrar.
+- **FR2.2**: Setup DNS zones for `confidentialhost.com` in Hestia.
 
 ### FR3: Hosting Environment
-- **FR3.1**: Configure `cfehost.net` in Hestia with SSL (Let's Encrypt).
+- **FR3.1**: Configure `confidentialhost.com` in Hestia with SSL (Let's Encrypt).
 - **FR3.2**: Enable Redis object caching and configure PHP OPcache.
 - **FR3.3**: Enable ModSecurity and ClamAV for security scanning.
 
 ### FR4: Email Services
-- **FR4.1**: Configure mail server (Exim/Dovecot) on Master.
+- **FR4.1**: Configure mail server (Exim/Dovecot) on Primary.
 - **FR4.2**: Install/Configure SnappyMail for webmail access.
 - **FR4.3**: Enable ManageSieve for email filtering.
 
@@ -69,23 +66,25 @@
 
 ---
 
-## Implementation Plan (Based on `new-plan-summary.md`)
+## Implementation Plan
 
-The implementation follows a 14-step plan:
+The implementation follows a phased approach:
 
-1.  **Servers & Roles Definition** (Done)
-2.  **Registrar Setup** (Moved to Step 9)
-3.  **Provisioning** (Done)
-4.  **SSH Hardening** (Done)
-5.  **Firewall Configuration** (Done)
-6.  **Master Server Install** (Done)
-7.  **Slave DNS Server Install** (Done)
-8.  **DNS Cluster Configuration** (To Do)
-9.  **Configure cfehost.net** (To Do)
-10. **Mail Configuration** (To Do)
-11. **Performance Optimization** (To Do)
-12. **Security Enhancements** (To Do)
-13. **Backups Setup** (To Do)
-14. **Client Workflow Definition** (To Do)
+1.  **Server Provisioning & Hardening**:
+    - Set hostname and timezone.
+    - Run `ssh-hardening.sh`.
+2.  **HestiaCP Installation**:
+    - Install full Hestia stack on Primary server.
+3.  **Domain & DNS Setup**:
+    - Configure Glue records at registrar.
+    - Setup `confidentialhost.com` and subdomains in Hestia.
+    - Enable SSL.
+4.  **Optimization & Security**:
+    - Configure Redis, OPcache, and ModSecurity.
+    - Setup ClamAV scans.
+5.  **Backups**:
+    - Setup local and off-site backups.
+6.  **Client Onboarding**:
+    - Define workflow for adding new sites.
 
 ---

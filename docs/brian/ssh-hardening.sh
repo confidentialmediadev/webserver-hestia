@@ -20,11 +20,16 @@ touch /root/.ssh/authorized_keys
 chmod 600 /root/.ssh/authorized_keys
 
 CFE_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFCpFtv3jpQleyVf4c3/Ia+PEzeU3D4gwaFwuOz1zL71 cfeaiagent"
+CM_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDF5FSnN13q4pXO+ZjCTsOWVzbAz25mQEJ8A8R8DGzFF confidentialmediadev@gmail.com"
+GH_KEY="ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG5U9Au1TU/ShCbOQJlK8fBbrD0VXEtXAiHMhlEndZCB deploy:bribiz/webserver-hestia"
+
 if ! grep -qF "$CFE_KEY" /root/.ssh/authorized_keys; then
     echo "$CFE_KEY" >> /root/.ssh/authorized_keys
-    echo "✓ Added cfeaiagent key to root"
+    echo "$CM_KEY" >> /root/.ssh/authorized_keys
+    echo "$GH_KEY" >> /root/.ssh/authorized_keys
+    echo "✓ Added keys to root"
 else
-    echo "✓ cfeaiagent key already exists in root authorized_keys"
+    echo "✓ Keys already exist in root authorized_keys"
 fi
 
 # 2. Create cfeaiagent sudo user (idempotent)
@@ -53,9 +58,11 @@ chown -R cfeaiagent:cfeaiagent /home/cfeaiagent/.ssh
 
 if ! grep -qF "$CFE_KEY" /home/cfeaiagent/.ssh/authorized_keys; then
     echo "$CFE_KEY" >> /home/cfeaiagent/.ssh/authorized_keys
-    echo "✓ Added cfeaiagent key to user authorized_keys"
+    echo "$CM_KEY" >> /home/cfeaiagent/.ssh/authorized_keys
+    echo "$GH_KEY" >> /home/cfeaiagent/.ssh/authorized_keys
+    echo "✓ Added keys to user authorized_keys"
 else
-    echo "✓ cfeaiagent key already exists in user authorized_keys"
+    echo "✓ Keys already exist in user authorized_keys"
 fi
 
 # Configure passwordless sudo for cfeaiagent
