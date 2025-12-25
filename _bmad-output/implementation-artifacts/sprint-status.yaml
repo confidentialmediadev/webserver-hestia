@@ -54,7 +54,7 @@ development_status:
   4-2-security-enhancements: done
   epic-4-retrospective: optional
 
-  epic-5: backlog
-  5-1-backup-configuration: backlog
+  epic-5: in-progress
+  5-1-backup-configuration: done
   5-2-client-onboarding-process: backlog
   epic-5-retrospective: optional
