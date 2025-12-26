@@ -157,7 +157,7 @@ See [Quick Reference](docs/quick-reference-onboarding.md) for more commands.
 
 ### HestiaCP Panel
 - **URL:** https://panel.confidentialhost.com:8083
-- **Admin User:** admin
+- **Admin User:** cfeadmin
 - **Features:** User management, domain configuration, email, DNS, backups
 
 ### Webmail
